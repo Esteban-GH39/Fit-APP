@@ -2,11 +2,12 @@ import express from "express";
 import db from "../config/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import authMiddleware from "../authmiddleware.js";
 
 const router = express.Router();
 
 // Get all users
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
     try {
         const [rows] = await db.query("SELECT * FROM users");
         res.json(rows);
